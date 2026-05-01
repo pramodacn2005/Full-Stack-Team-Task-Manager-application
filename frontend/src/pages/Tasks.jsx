@@ -29,7 +29,7 @@ const Tasks = () => {
       const [tasksRes, projectsRes, usersRes] = await Promise.all([
         api.get('/tasks'),
         api.get('/projects'),
-        api.get('/users').catch(() => ({ data: { data: [] } })) // Admins can get users, Members might not. Handle graceful fail if needed, or just backend restriction.
+        api.get('/auth/users').catch(() => ({ data: { data: [] } })) // Admins can get users, Members might not. Handle graceful fail if needed, or just backend restriction.
       ]);
       
       setTasks(tasksRes.data.data);
@@ -214,7 +214,7 @@ const Tasks = () => {
                     onChange={(e) => setAssignedTo(e.target.value)}
                   >
                     <option value="">Unassigned</option>
-                    {users.map(u => (
+                    {(users || []).map(u => (
                       <option key={u._id} value={u._id}>{u.name}</option>
                     ))}
                   </select>

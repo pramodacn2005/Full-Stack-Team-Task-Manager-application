@@ -35,8 +35,8 @@ const Projects = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await api.get('/users');
-      setUsers(res.data.data);
+      const res = await api.get('/auth/users');
+      setUsers(res.data.data || []);
     } catch (err) {
       console.error(err);
     }
@@ -145,7 +145,7 @@ const Projects = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Team Members</label>
                 <div className="max-h-40 overflow-y-auto space-y-2 border border-gray-200 rounded-lg p-2">
-                  {users.map(u => (
+                  {(users || []).map(u => (
                     <label key={u._id} className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                       <input 
                         type="checkbox" 
